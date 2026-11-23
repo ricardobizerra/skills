@@ -1,0 +1,41 @@
+{
+  "skill_name": "conventional-commits",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just implemented a new benefit recharge schedule feature across our Dockerized fullstack monorepo: it modifies api/prisma/schema.prisma and api/src/employment/employment.service.ts, regenerates api/src/lib/graphql/schema.gql and prisma-client, adds web/src/modules/wages/RechargeForm.tsx and its GraphQL mutation, updates web/src/graphql/generated.ts, and adds docs/adr/0004-benefit-recharge.md. Organize these changes into atomic commits and tell me the exact git add, validation gate, and git commit commands for each.",
+      "expected_output": "Separates the dirty working tree into the 5-stage atomic commit pipeline in strict dependency order without using git add -A: Stage 1 (api/prisma + api/src/employment -> run Dockerized api test/migration gate -> commit feat(api/employment): ...), Stage 2 (api/src/lib/graphql/ -> run api generate:dev gate -> commit chore(api): update generated schema and prisma-client exports), Stage 3 (web/src/modules/wages/ -> run web prettier and typecheck gate -> commit feat(web/wages): ...), Stage 4 (web/src/graphql/ -> run web codegen and typecheck gate -> commit chore(web): update generated graphql types), Stage 5 (docs/adr/ -> verify links/check-docs -> commit docs(adr): ...). All commit subjects use imperative mood, lowercase start, and no trailing period.",
+      "files": [],
+      "assertions": [
+        "Splits changes into 5 sequential stages (Backend -> Backend Codegen -> Frontend -> Frontend Codegen -> Docs/ADR)",
+        "Uses targeted git add per stage rather than git add -A across the whole dirty tree",
+        "Runs the corresponding Dockerized pre-commit validation gate before each commit",
+        "Formats every commit message in strict Conventional Commits v1.0.0 format (imperative mood, lowercase start, no trailing period)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "In our single-package TypeScript CLI repo (no Docker, using pnpm), I fixed an off-by-one bug in src/parser/tokenizer.ts, added a regression test in src/parser/tokenizer.spec.ts, and updated docs/syntax.md. How should I stage and commit these changes?",
+      "expected_output": "Adapts the staged pipeline by skipping unused codegen/frontend stages: executes Stage 1 for src/parser/tokenizer.ts and src/parser/tokenizer.spec.ts (running pnpm typecheck / lint / test before committing fix(parser): <imperative description>) and Stage 5 for docs/syntax.md (verifying markdown links before committing docs(syntax) or docs: <imperative description>). Explains how PR titles differ if opening a PR ([Fix] <Imperative description>).",
+      "files": [],
+      "assertions": [
+        "Cleanly skips non-applicable codegen and frontend stages for a single-package repository",
+        "Stages implementation + regression test together in Stage 1 and runs host pnpm test/typecheck gates before committing",
+        "Stages documentation separately in the final stage with a docs: or docs(<scope>): commit",
+        "Follows imperative, lowercase, no-period subject formatting"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Review these three proposed commit messages and fix any violations of our Conventional Commits rules:\n1. feat(Web/Cards): Added foreign currency spread calculation.\n2. Bugfix: fixed scroll reset on modal open\n3. [Feature] update generated graphql types and docs",
+      "expected_output": "Identifies and corrects all violations: (1) scope should be lowercase (web/cards), verb must be imperative lowercase ('add', not 'Added'), and trailing period must be removed -> 'feat(web/cards): add foreign currency spread calculation'; (2) 'Bugfix' is not one of the 10 canonical types (use 'fix(<scope>)') and 'fixed' must be imperative ('fix' or 'prevent') -> 'fix(web): prevent scroll reset on modal open'; (3) '[Feature]' is a PR title prefix, not a commit type, and generated types must be split from docs into separate atomic commits: 'chore(web): update generated graphql types' and 'docs: ...'.",
+      "files": [],
+      "assertions": [
+        "Corrects past-tense 'Added' and 'fixed' to lowercase imperative mood",
+        "Removes trailing period and normalizes scope casing",
+        "Replaces non-canonical 'Bugfix' and bracketed PR prefix '[Feature]' with canonical Conventional Commit types (fix, chore, docs)",
+        "Splits the bundled codegen + docs commit into separate atomic commits"
+      ]
+    }
+  ]
+}

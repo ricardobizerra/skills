@@ -1,0 +1,28 @@
+{
+  "skill_name": "pr",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write the PR title and body for my branch fix/modal-scroll-reset. We fixed a bug where opening a Radix Dialog in web/src/components/ui/Dialog.tsx reset window.scrollY to 0 by switching to a non-locking scroll container. We ran prettier, typecheck, and unit tests, but we didn't run the Playwright E2E suite yet. This closes issue #88.",
+      "expected_output": "Produces a canonical bracketed PR title ('[Fix] Prevent window scroll reset when opening modal dialogs' — sentence-cased imperative, no trailing period, no package scope tag). Uses the 5-section Topic PR template: (1) ## Summary with a compact visual (pseudocode diff or component tree diff showing the Dialog scroll container change); (2) ## Evidence with Before and After behavior/test results; (3) ## Merge Danger naming Door: two-way and Blast Radius; (4) ## Verification Gates checking off [x] ONLY prettier, typecheck, and unit tests while leaving E2E unchecked [ ] per the honesty invariant; (5) ## References linking Closes #88 and ADR: N/A.",
+      "files": [],
+      "assertions": [
+        "Formats the PR title with the canonical bracketed prefix '[Fix] <Imperative description>' without package scopes or trailing period",
+        "Includes all 5 mandatory Topic PR sections (Summary, Evidence, Merge Danger, Verification Gates, References)",
+        "Uses a compact visual representation (pseudocode diff, component tree, or call tree) in ## Summary",
+        "Checks off [x] only the verification gates that actually ran (prettier, typecheck, unit tests) and leaves E2E unchecked [ ]"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "We are cutting version v0.4.0 from develop into main. It includes benefit recharge schedules (ADR-0004), payroll sync, a fix for card cycle dates, and a new Prisma migration adding the BenefitSchedule table. Write the PR title and description.",
+      "expected_output": "Uses the Release PR format: title '[Release] v0.4.0 - Benefit recharge schedules and payroll sync', and the Release PR Template containing ## Release Highlights, ## Included Changes (grouped under ### Features, ### Fixes, ### Chores & Maintenance), ## Breaking Changes & Migrations (calling out the Prisma migration adding BenefitSchedule), ## Pre-Release Verification Checklist, and ## References (listing ADR-0004).",
+      "files": [],
+      "assertions": [
+        "Formats the Release PR title as '[Release] v0.4.0 - <Highlights>'",
+        "Uses the Release PR Template (Release Highlights, Included Changes with Features/Fixes/Chores, Breaking Changes & Migrations, Pre-Release Verification Checklist, References)",
+        "Explicitly documents the BenefitSchedule database migration under Breaking Changes & Migrations and ADR-0004 under References"
+      ]
+    }
+  ]
+}

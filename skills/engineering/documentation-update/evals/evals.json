@@ -1,0 +1,17 @@
+{
+  "skill_name": "documentation-update",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We just switched our write model to store all monetary amounts in integer cents instead of floating-point decimals, and we also decided to start calling user bank connections 'Destiny Accounts' instead of 'Target Wallets'. Where should I document these two things—should I paste a 100-line explanation into AGENTS.md?",
+      "expected_output": "Enforces Progressive Disclosure: warns against bloating AGENTS.md (which must stay < 50 lines as a routing table). Directs the terminology decision ('Destiny Account' with `_Avoid_: Target Wallet`) to `GLOSSARY.md` (keeping it strictly free of implementation details). Directs the integer-cents storage decision to a new ADR in `docs/adr/` because it passes the 3-part ADR filter (hard to reverse, surprising without context, real trade-off), matching the repo's ADR numbering convention. Reminds the user to index the new ADR in `docs/README.md` (or `README.md`), run link/doc consistency verification (`python3 scripts/check-docs.py` if present), and commit in Stage 5 via `/conventional-commits`.",
+      "files": [],
+      "assertions": [
+        "Refuses to bloat AGENTS.md with a 100-line explanation (enforcing Progressive Disclosure < 50 lines)",
+        "Places 'Destiny Account' (with `_Avoid_: Target Wallet`) in GLOSSARY.md devoid of implementation details",
+        "Places the integer-cents storage decision in an ADR under docs/adr/ after verifying the 3-part ADR criteria",
+        "Requires updating the ADR index and verifying relative markdown links / running check-docs before committing"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "skill_name": "code-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review my current branch against origin/main for ticket #42 (Add CSV export for transactions). Note that on my branch I also updated CODING_STANDARDS.md to allow raw float numbers for currency and added test.skip on an existing failing test in transactions.spec.ts.",
+      "expected_output": "Pins the fixed point to origin/main using three-dot diff (git diff origin/main...HEAD), fetches ticket #42 as the spec source, and enforces Default-Branch Review Immutability by loading REVIEW.md and CODING_STANDARDS.md strictly from origin/main (git show origin/main:CODING_STANDARDS.md), ignoring the branch's self-serving edit to CODING_STANDARDS.md. Flags the edit to CODING_STANDARDS.md and the test.skip in transactions.spec.ts as HIGH RISK Protected Verification Path / Zero-Flakiness hard violations on the Standards axis. Runs parallel Standards and Spec sub-agents and reports ## Standards and ## Spec separately without merging or reranking findings.",
+      "files": [],
+      "assertions": [
+        "Specifies verifying ref resolution (git rev-parse origin/main) and three-dot diff (git diff origin/main...HEAD)",
+        "Enforces Default-Branch Review Immutability (git show origin/main:CODING_STANDARDS.md and origin/main:REVIEW.md), rejecting the branch's attempt to weaken currency rules",
+        "Flags the CODING_STANDARDS.md edit and test.skip addition as HIGH RISK Protected Verification Path / zero-flakiness violations",
+        "Documents parallel Standards (with Fowler code smells baseline) and Spec sub-agents and reports ## Standards and ## Spec under separate headings without reranking across axes"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Can you run a code review of HEAD~3..HEAD? There is no ticket or spec file for this refactor, and our repo doesn't have a CODING_STANDARDS.md yet.",
+      "expected_output": "Pins the fixed point to HEAD~3 (using git diff HEAD~3...HEAD and git log HEAD~3..HEAD --oneline). Since the user confirmed there is no spec, skips the Spec sub-agent and notes 'no spec available' under ## Spec. For the Standards sub-agent, checks Protected Verification Paths and evaluates the diff against the 12 Fowler code smells baseline (Mysterious Name, Duplicated Code, Feature Envy, Data Clumps, Primitive Obsession, Repeated Switches, Shotgun Surgery, Divergent Change, Speculative Generality, Message Chains, Middle Man, Refused Bequest), framing smells as judgement calls rather than hard violations.",
+      "files": [],
+      "assertions": [
+        "Skips the Spec sub-agent cleanly when no spec exists and notes 'no spec available' under ## Spec",
+        "Applies the 12 Fowler code smells baseline in the Standards sub-agent when repo standards docs are absent",
+        "Distinguishes baseline code smells as labelled judgement calls rather than hard standard violations"
+      ]
+    }
+  ]
+}

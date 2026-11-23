@@ -1,0 +1,16 @@
+{
+  "skill_name": "graphql-codegen",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I added a new `foreignCurrencySpread` field to our NestJS `CardModel` in `api/src/cards/models/card.model.ts` and queried it in `web/src/modules/cards/queries.ts`, but when I ran `docker compose run --rm web bun run codegen` it failed with `Cannot query field \"foreignCurrencySpread\" on type \"CardModel\"`. Should I manually add the field to `api/src/lib/graphql/schema.gql` and `web/src/graphql/generated.ts`?",
+      "expected_output": "Strictly forbids hand-editing `api/src/lib/graphql/schema.gql` or `web/src/graphql/generated.ts` (the Generated Files Invariant). Explains that frontend codegen reads the local `schema.gql` emitted by the backend, so Stage A (backend schema emission via `docker compose run --rm api bun run generate:dev`) must be executed BEFORE Stage B (frontend codegen via `docker compose run --rm web bun run codegen`). Shows the 4-stage atomic commit split (Stage 1: api resolver/model -> Stage 2: chore(api) generated schema -> Stage 3: web query/component -> Stage 4: chore(web) generated graphql types).",
+      "files": [],
+      "assertions": [
+        "Strictly forbids manually editing schema.gql or generated frontend GraphQL files",
+        "Identifies the ordering dependency: Stage A (backend generate:dev) must run before Stage B (frontend codegen)",
+        "Outlines the 4-stage atomic commit split separating human-authored API/Web changes from generated artifacts"
+      ]
+    }
+  ]
+}

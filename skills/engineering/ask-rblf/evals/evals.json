@@ -1,0 +1,40 @@
+{
+  "skill_name": "ask-rblf",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just cloned a new TypeScript monorepo and installed ricardobizerra/skills. I want to add a new billing webhook endpoint and make sure I follow the full workflow from branching to PR. Which skills should I run and in what order?",
+      "expected_output": "Advises running /setup-rblf-skills first (if docs/agents/ isn't configured yet), then walks through the main engineering spine in order: (1) /git-branching to pass the Repository State Gate, sync local main, and cut a feature/ branch; (2) /feature-development (plus /database-migration or /graphql-codegen if applicable and /testing for specs); (3) /conventional-commits to stage atomic commits per layer behind validation gates; (4) /verify (which includes /code-review against origin/main); and (5) /pr when opening the pull request.",
+      "files": [],
+      "assertions": [
+        "Mentions /setup-rblf-skills as the one-time onboarding precondition",
+        "Lists /git-branching before any file edits or feature work",
+        "Includes /feature-development and /testing for implementation",
+        "Includes /conventional-commits for staged atomic commits",
+        "Includes /verify and /code-review before promotion or /pr"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "We want to set up an automated nightly GitHub Actions workflow where an agent updates our dependencies and skills, runs tests, and maintains a rolling PR without ever being able to weaken our ESLint or Playwright configs. Which skill in this repo covers designing that system?",
+      "expected_output": "Routes the user to /software-factory, explaining that it provides the vocabulary (Task, Trigger, Run, Runner, Orchestrator) as well as the Verification Brakes (Protected Verification Paths, Default-Branch Review Immutability, Zero-Flakiness Gates) and Rolling Ratchet task patterns.",
+      "files": [],
+      "assertions": [
+        "Routes primarily to /software-factory",
+        "Mentions Verification Brakes or Protected Verification Paths / Default-Branch Review Immutability",
+        "Mentions Rolling Ratchet tasks"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I have uncommitted changes across my Prisma schema, NestJS API resolvers, Next.js pages, and generated GraphQL hooks, and I'm ready to commit and push. Which skills do I need right now?",
+      "expected_output": "Routes to /database-migration and /graphql-codegen if artifacts haven't been regenerated/inspected yet, then /conventional-commits to split the dirty tree into ordered staged atomic commits (backend -> backend codegen -> frontend -> frontend codegen -> docs) with pre-commit gates, followed by /verify and /git-branching (Step 8) to push and promote.",
+      "files": [],
+      "assertions": [
+        "Routes to /conventional-commits to split the multi-layer changes into ordered atomic commits",
+        "Mentions /graphql-codegen or /database-migration for schema and generated artifact alignment",
+        "Mentions /verify before pushing or promoting the branch"
+      ]
+    }
+  ]
+}

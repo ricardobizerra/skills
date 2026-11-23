@@ -1,0 +1,65 @@
+{
+  "skill_name": "git-branching",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to add a new webhook retry endpoint to our backend and a status badge in the web app. I am currently on the main branch. How should I set up my git branch before writing code?",
+      "expected_output": "Runs the Step 0 Repository State Gate and Step 2 Clean Working Tree Gate, synchronizes local main via git fetch origin main + git checkout main + git merge --ff-only origin/main, and cuts the topic branch from local main using the canonical feature/ prefix (git checkout -b feature/<slug> main). Explicitly warns never to cut from origin/main. Asserts the two post-conditions: <branch>@{upstream} must fail (no upstream configured) and HEAD equals origin/main.",
+      "files": [],
+      "assertions": [
+        "Runs the Repository State Gate and Clean Working Tree Gate before branching",
+        "Synchronizes local main via git fetch origin main and git merge --ff-only origin/main",
+        "Cuts the feature/ branch from local main, explicitly warning against branching from origin/main",
+        "Asserts both post-conditions: no upstream tracking reference configured and HEAD == origin/main"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I opened the repo and git status says 'interactive rebase in progress; onto 71c687b', git branch --show-current returns nothing, and docs/README.md is conflicted. I want to start an unrelated feature. Just clean this up and cut me a new branch.",
+      "expected_output": "HALTs immediately at Step 0 (Repository State Gate). Recognizes an in-progress interactive rebase as an active state machine rather than a dirty working tree. Reports the operation type and conflicted files, and offers ONLY non-destructive exits (git rebase --continue, git rebase --skip, git rebase --abort). Refuses to run git reset --hard or git clean -fd, refuses to abort/continue autonomously, and does not cut a new branch until the user resolves the rebase.",
+      "files": [],
+      "assertions": [
+        "Halts immediately upon detecting the in-progress interactive rebase and detached HEAD",
+        "Offers only non-destructive rebase exits (--continue, --skip, --abort)",
+        "Explicitly forbids git reset --hard and git clean -fd during an in-progress operation",
+        "Does not abort or switch branches autonomously"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I was experimenting with a UI tweak and have modified tracked files in src/components/ plus an untracked HANDOFF.md and some untracked scratch files, when an urgent production calculation bug came in. What should I do before cutting the fix branch?",
+      "expected_output": "Separates tracked modifications from untracked files in the Clean Working Tree Gate (Step 2). Hard-blocks on tracked modifications and offers committing or stashing with the two-way named stash contract (git stash push -u -m '<prefix>/<slug>: <reason>'). Classifies untracked files (part of current work, throwaway scratch deleted by the user by explicit path, or local-only/environmental like HANDOFF.md) and strictly forbids git clean -fd. Then syncs local main (--ff-only) and cuts fix/<slug> from local main.",
+      "files": [],
+      "assertions": [
+        "Hard-blocks on dirty tracked files and uses the named stash format '<prefix>/<slug>: <reason>'",
+        "Classifies untracked files separately instead of auto-deleting them",
+        "Explicitly forbids git clean -fd",
+        "Synchronizes local main and cuts a canonical fix/ branch from local main"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I ran git checkout -b feature/invoice-export origin/main like a tutorial suggested, and git status shows '## feature/invoice-export...origin/main [ahead 1]'. Can I push now? Also, earlier when I tried git merge --ff-only origin/main on another machine it failed—should I just git reset --hard origin/main when that happens?",
+      "expected_output": "Flags 'feature/invoice-export...origin/main' as a critical publishing hazard because the topic branch is tracking origin/main (Golden Rule 3), meaning git push could publish directly to trunk. Instructs unsetting the upstream or recreating the branch from verified local main and asserting @{upstream} fails. For the --ff-only failure, explains that it is a protective failure indicating local-only commits on main: tells the user to HALT, inspect git rev-list --left-right --count origin/main...main and git log --oneline origin/main..main, and never auto-reset local main.",
+      "files": [],
+      "assertions": [
+        "Identifies tracking origin/main as a trunk-publishing hazard (Golden Rule 3)",
+        "Shows how to fix the upstream tracking defect and assert @{upstream} does not resolve",
+        "Treats git merge --ff-only failure on main as a protective failure and forbids auto-resetting local main",
+        "Provides git rev-list / git log commands to inspect local-only commits on main"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I finished my atomic commits on feature/ledger-export in our main+develop repository, and while I was working two PRs landed on origin/main. Walk me through syncing with main and finishing the branch.",
+      "expected_output": "First fetches origin main and checks whether the branch is already contained in origin/main via git merge-base --is-ancestor HEAD origin/main. When safe, syncs via git pull --no-rebase origin main (strictly forbidding git rebase, force-push, and git merge develop). Re-runs validation gates and full /verify, checks the Drift Baseline and stash inventory, pushes via git push -u origin feature/ledger-export, and asks the user whether to merge (--no-ff) into develop and push origin/develop without emitting unsolicited PR boilerplate.",
+      "files": [],
+      "assertions": [
+        "Checks containment via git merge-base --is-ancestor HEAD origin/main before syncing",
+        "Syncs upstream main via git pull --no-rebase origin main and forbids rebase/force-push/merging develop",
+        "Pushes with git push -u origin feature/ledger-export after verification",
+        "Asks user confirmation before merging --no-ff into develop and pushing origin/develop"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "skill_name": "database-migration",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We want to rename the `account_holder` column to `customer_name` on our `invoices` table (which already has 50,000 rows in production) and add a non-nullable `currency_code` column in Prisma. What steps and checks should I follow?",
+      "expected_output": "Checks GLOSSARY.md first to confirm `customer_name` and `currency_code` match canonical domain terms. Flags both changes as potential one-way doors on a populated 50,000-row table: warns that renaming a column in Prisma can generate a destructive `DROP COLUMN account_holder` + `ADD COLUMN customer_name` unless inspected and rewritten as `ALTER TABLE ... RENAME COLUMN` (or executed via an expand-and-contract migration), and adding a `NOT NULL` column (`currency_code`) requires either a safe `DEFAULT` or a backfill step. Walks through editing schema.prisma, running migration generation (Dockerized if docker-compose.yml exists), mandatory line-by-line inspection of the generated SQL file, regenerating Prisma/GraphQL artifacts, updating services/tests/data-model docs, and documenting the one-way door in the PR's Merge Danger section.",
+      "files": [],
+      "assertions": [
+        "Checks GLOSSARY.md for canonical domain terminology before finalizing column names",
+        "Warns that renaming a column or adding NOT NULL on an existing 50,000-row table is a destructive/one-way door risk requiring mandatory raw SQL inspection (to prevent DROP + ADD data loss) or expand-and-contract/backfill",
+        "Includes regenerating ORM/GraphQL client artifacts and updating tests and data-model documentation",
+        "Forbids deleting or rewriting already-merged migrations"
+      ]
+    }
+  ]
+}

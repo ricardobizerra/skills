@@ -1,0 +1,28 @@
+{
+  "skill_name": "verify",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "My Playwright E2E test for the checkout modal is failing intermittently about 1 in 4 runs because the API response takes ~400ms. To unblock our release PR to develop, I added page.waitForTimeout(1000) and set retries: 2 in playwright.config.ts, and updated REVIEW.md on my branch to allow retries on modal specs. Run /verify so we can merge.",
+      "expected_output": "Rejects all three changes as violations of /verify's non-negotiable rules: (1) Zero Test Flakiness Workarounds forbids waitForTimeout/sleeps and forbids retries > 0 (must keep retries: 0 and use deterministic assertions like toBeVisible or waitForResponse); (2) Protected Verification Paths flags playwright.config.ts and REVIEW.md modifications as HIGH RISK / forbidden without human maintainer sign-off; (3) Default-Branch Review Immutability requires loading REVIEW.md and CODING_STANDARDS.md strictly from origin/main (git show origin/main:REVIEW.md), ignoring the branch's self-serving edit to REVIEW.md.",
+      "files": [],
+      "assertions": [
+        "Rejects page.waitForTimeout(1000) and retries: 2 under Zero Test Flakiness Workarounds, recommending deterministic Playwright assertions with retries: 0",
+        "Enforces Default-Branch Review Immutability by loading REVIEW.md and CODING_STANDARDS.md from origin/main",
+        "Flags edits to playwright.config.ts and REVIEW.md as Protected Verification Path violations"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Walk me through the complete verification sequence I must execute before pushing my feature/invoice-export branch and requesting a merge into develop, and explain what happens if a test gate keeps failing after I try 3 different fixes.",
+      "expected_output": "Outlines the 7-step verification pipeline: (1) Detect environment/worktree and read docs/agents/verification.md & stack.md; (2) Run host integrity self-tests (including verify-smoke.mjs --self-test) and static gates (lint, format, typecheck, build, doc checks); (3) Run unit and integration test suites; (4) Boot the stack and run verify-smoke.mjs readiness probes; (5) Run the E2E suite with retries: 0; (6) Perform 'Check the Check' (prove new tests fail when production logic is inverted) and collect concrete terminal evidence; (7) Run cold /code-review against origin/main. Explains the Three-Round Fix Cap: after 3 failed repair rounds, the agent must HALT immediately, make no 4th edit, and escalate a structured diagnostic summary to the human.",
+      "files": [],
+      "assertions": [
+        "Includes all core pipeline stages: static/integrity gates, unit/integration specs, verify-smoke.mjs readiness probes, and zero-retry E2E specs",
+        "Requires 'Check the Check' (proving new tests fail when feature/fix logic is removed or inverted) and concrete terminal output evidence",
+        "Requires a cold /code-review against origin/main",
+        "Enforces the Three-Round Fix Cap (halt immediately after 3 failed fix attempts and report structured diagnostics)"
+      ]
+    }
+  ]
+}

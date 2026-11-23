@@ -1,0 +1,28 @@
+{
+  "skill_name": "software-factory",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "We want to build an automated background job on GitHub where an AI agent picks up Linear issues, runs on an E2B sandbox, opens a PR, and fixes its own code until CI and automated review pass. Help me design this and make sure the agent can't cheat by weakening our tests or editing REVIEW.md.",
+      "expected_output": "Uses the canonical software-factory vocabulary (Task, Trigger, Run, Runner, Ticket tracker, Git host, Orchestrator, Observability platform) and explicitly corrects non-canonical terms ('job' -> Task/Run, 'sandbox' -> Runner, 'issue' -> Ticket). Fills every service slot (Linear as Ticket tracker, GitHub as Git host, GitHub Actions or custom server as Orchestrator, E2B as Runner). Defines the Explore/Implementer/Automated review/Rework tasks and applies the three Verification Brakes: (1) Protected Verification Paths and zero-flakiness enforcement so runs cannot skip tests or edit CI/test configs, (2) Default-Branch Review Immutability reading REVIEW.md and CODING_STANDARDS.md strictly from origin/main, and (3) a 3-round rework cap before escalating to a human.",
+      "files": [],
+      "assertions": [
+        "Uses canonical vocabulary (Task, Trigger, Run, Runner, Ticket tracker, Git host, Orchestrator) and flags avoided synonyms like job or sandbox",
+        "Enforces Default-Branch Review Immutability (reading REVIEW.md / CODING_STANDARDS.md from origin/main)",
+        "Enforces Protected Verification Paths and zero-flakiness test integrity",
+        "Caps the automated review -> rework loop at 3 rounds before human escalation"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "How should our software factory handle daily updates to third-party agent skills in skills-lock.json without opening 30 separate PRs a month or allowing an upstream skill update to overwrite our repository's custom verify and code-review skills?",
+      "expected_output": "Describes the Rolling Ratchet task pattern: triggered by a daily/weekly clock, it first runs a Safeguard Trunk Sync (merging origin/main into a dedicated ratchet branch), classifies conflicts into auto-resolvable (skills/lockfiles/generated artifacts) vs. manual (escalating manual conflicts via a Sync Conflict PR), enforces boundaries by reverting any changes outside skills scope or inside Protected Verification Paths (such as verify and code-review), runs integrity gates, and maintains a single rolling PR into the integration branch.",
+      "files": [],
+      "assertions": [
+        "Describes a Rolling Ratchet task maintaining a single rolling branch and PR",
+        "Includes Safeguard Trunk Sync from origin/main with auto-resolvable vs. manual conflict classification",
+        "Protects repository-owned Protected Verification Paths (verify, code-review, etc.) by reverting out-of-scope or protected modifications"
+      ]
+    }
+  ]
+}

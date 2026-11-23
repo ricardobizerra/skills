@@ -1,0 +1,17 @@
+{
+  "skill_name": "feature-development",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to build a new 'Scheduled Transfers' feature across our fullstack app (new database table, backend GraphQL resolver + service, frontend transfer scheduling form, and Playwright E2E spec). Outline the execution and commit plan from start to finish.",
+      "expected_output": "Walks through the complete feature-development lifecycle: Step 0 (/git-branching pre-flight gate, sync local main, cut feature/scheduled-transfers); Step 1 (check GLOSSARY.md, ADRs, and immutable origin/main standards); Stage 1 (database migration via /database-migration + backend service/resolver + backend unit specs with 'Check the Check' -> validate -> commit feat(api/...)); Stage 2 (regenerate backend schema/ORM artifacts via /graphql-codegen -> commit chore(api)); Stage 3 (frontend UI + GraphQL documents + Playwright E2E spec with retries=0 -> validate prettier/typecheck -> commit feat(web/...)); Stage 4 (regenerate frontend GraphQL types -> validate typecheck -> commit chore(web)); Stage 5 (update GLOSSARY.md / record ADR via /documentation-update -> commit docs(adr)); and Step 3 (run full /verify including verify-smoke.mjs and cold /code-review against origin/main before pushing).",
+      "files": [],
+      "assertions": [
+        "Starts with /git-branching pre-flight gates and cutting a canonical feature/ branch from local main",
+        "Orders implementation and commits across all 5 atomic stages (Backend/DB -> Backend Codegen -> Frontend/E2E -> Frontend Codegen -> Docs/ADR)",
+        "Delegates migration inspection to /database-migration, schema/type sync to /graphql-codegen, and zero-flakiness tests to /testing",
+        "Requires full /verify (including smoke probes and cold /code-review vs origin/main) before promotion"
+      ]
+    }
+  ]
+}

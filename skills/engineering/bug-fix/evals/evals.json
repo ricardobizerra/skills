@@ -1,0 +1,17 @@
+{
+  "skill_name": "bug-fix",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Users report that canceling a partially paid invoice throws a 500 error in the billing service. While looking at the file I also noticed some ugly variable names in an unrelated tax helper. Walk me through how I should fix and ship this bug.",
+      "expected_output": "Follows the 5-step bug-fix workflow: (0) Run /git-branching pre-flight gates, sync local main, and cut `fix/partial-invoice-cancellation` from local main; (1) Write a focused failing reproduction spec for canceling a partially paid invoice and watch it fail ('Check the Check'); (2) Apply a surgical root-cause fix in the billing service while explicitly leaving the unrelated tax helper variable renames out of this fix branch (scope discipline), and check if any corrupted invoice rows need a data migration; (3) Sync any affected codegen/docs; (4) Commit via /conventional-commits (`fix(api/billing): ...`) after passing pre-commit gates; (5) Run full /verify (including cold /code-review against origin/main) before pushing.",
+      "files": [],
+      "assertions": [
+        "Starts with /git-branching pre-flight verification and cuts a canonical fix/ branch from local main",
+        "Requires writing and running a focused failing reproduction test BEFORE modifying production code",
+        "Enforces surgical scope restraint by refusing to bundle the unrelated tax helper refactor into the bug fix",
+        "Concludes with staged atomic commits (/conventional-commits) and full /verify (including cold /code-review)"
+      ]
+    }
+  ]
+}

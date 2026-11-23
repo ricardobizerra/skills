@@ -1,0 +1,25 @@
+{
+  "skill_name": "testing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "In our Dockerized monorepo (where the api container's WORKDIR is /app/api), I wrote a new unit test at api/src/cards/billing.spec.ts. What command should I run to execute just this test, and how do I verify the test itself is valid?",
+      "expected_output": "Applies the Container-Relative Path Rule: runs `docker compose run --rm api bun test src/cards/billing.spec.ts` (passing `src/cards/billing.spec.ts` relative to `/app/api`, never `api/src/...`). Explains 'Check the Check': temporarily invert or remove the production logic in the cards billing service, confirm the test fails for the expected reason, then restore the logic and confirm it passes before running the full api test suite.",
+      "files": [],
+      "assertions": [
+        "Passes container-relative path src/cards/billing.spec.ts (not api/src/cards/billing.spec.ts) to docker compose run --rm api",
+        "Explains 'Check the Check' (proving the new test fails when the production logic is inverted or removed)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Our Playwright spec in web/e2e/dashboard.spec.ts fails occasionally because a chart takes a moment to render after the GraphQL query finishes. Should I add `await page.waitForTimeout(1500)` before the assertion, or set `retries: 1` in `playwright.config.ts`, or mark it `test.fixme` for now?",
+      "expected_output": "Rejects all three options under Zero Flakiness Workarounds (never use waitForTimeout/sleeps, never set retries > 0, and never commit test.fixme/.skip). Recommends awaiting deterministic Playwright web-first assertions (such as `await expect(page.getByRole(...)).toBeVisible()`) or awaiting the specific GraphQL network response (`page.waitForResponse(...)`), while keeping `retries: 0`.",
+      "files": [],
+      "assertions": [
+        "Explicitly rejects waitForTimeout(1500), retries: 1, and test.fixme under Zero Flakiness Workarounds",
+        "Recommends deterministic Playwright web-first assertions (toBeVisible / waitForResponse) with retries: 0"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ricardobizerra",
+  "owner": {
+    "name": "Ricardo Bizerra",
+    "url": "https://github.com/ricardobizerra"
+  },
+  "metadata": {
+    "description": "Disciplined software engineering, git governance, staged atomic commits, zero-flakiness verification, and software factory skills for AI coding agents.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "rblf-skills",
+      "description": "Production engineering workflow skills: git-branching, conventional-commits, verify, code-review, pr, testing, bug-fix, feature-development, database-migration, graphql-codegen, documentation-update, software-factory, setup-rblf-skills, and ask-rblf.",
+      "source": "./",
+      "skills": [
+        "./skills/engineering/ask-rblf",
+        "./skills/engineering/setup-rblf-skills",
+        "./skills/engineering/git-branching",
+        "./skills/engineering/conventional-commits",
+        "./skills/engineering/verify",
+        "./skills/engineering/code-review",
+        "./skills/engineering/pr",
+        "./skills/engineering/testing",
+        "./skills/engineering/bug-fix",
+        "./skills/engineering/feature-development",
+        "./skills/engineering/database-migration",
+        "./skills/engineering/graphql-codegen",
+        "./skills/engineering/documentation-update",
+        "./skills/engineering/software-factory"
+      ]
+    }
+  ]
+}
