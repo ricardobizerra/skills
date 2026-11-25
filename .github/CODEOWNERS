@@ -1,0 +1,16 @@
+# Protected Verification Paths & Governance Files
+# Modifications to any path below require explicit review by @ricardobizerra.
+
+/REVIEW.md                                  @ricardobizerra
+/SCOPE.md                                   @ricardobizerra
+/.out-of-scope/                             @ricardobizerra
+/.github/                                   @ricardobizerra
+/.claude-plugin/                            @ricardobizerra
+/scripts/                                   @ricardobizerra
+/AGENTS.md                                  @ricardobizerra
+/CLAUDE.md                                  @ricardobizerra
+/docs/agents/                               @ricardobizerra
+/skills/engineering/verify/                 @ricardobizerra
+/skills/engineering/code-review/            @ricardobizerra
+/skills/engineering/testing/                @ricardobizerra
+/skills/engineering/git-branching/          @ricardobizerra

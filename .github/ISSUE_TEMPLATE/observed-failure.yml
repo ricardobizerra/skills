@@ -1,0 +1,71 @@
+name: Observed Failure
+description: Report a real failure observed in an agent session while using ricardobizerra/skills.
+title: "[Issue] "
+labels: ["needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every issue is evaluated against [`SCOPE.md`](../../SCOPE.md) and [`.out-of-scope/`](../../.out-of-scope/).
+        Please report **one concrete, observed failure** per issue. Hypothetical feature pitches or raw pasted specs will be closed.
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Affected Skill
+      description: Which skill or governance area exhibited the failure?
+      options:
+        - ask-rblf
+        - bug-fix
+        - code-review
+        - conventional-commits
+        - database-migration
+        - documentation-update
+        - feature-development
+        - git-branching
+        - graphql-codegen
+        - pr
+        - setup-rblf-skills
+        - software-factory
+        - testing
+        - verify
+        - Other / Repository Governance
+    validations:
+      required: true
+  - type: input
+    id: harness
+    attributes:
+      label: Agent Harness & Environment
+      description: Which coding agent and environment were you using?
+      placeholder: "e.g., Claude Code 1.x / Antigravity / Codex CLI on Linux, Node 20"
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Exact Command or Workflow Run
+      description: What did you invoke, and what was the repository context?
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed Behavior
+      description: What did the agent actually do wrong?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should the skill have caused the agent to do instead?
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-Submission Checks
+      options:
+        - label: I checked SCOPE.md and .out-of-scope/ and confirmed this is not already rejected.
+          required: true
+        - label: This issue describes one concrete observed failure from a real session.
+          required: true

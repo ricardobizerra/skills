@@ -1,0 +1,25 @@
+name: PR Title Check
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  pr-title:
+    name: Validate Bracketed PR Title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title matches /pr convention
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [[ ! "$PR_TITLE" =~ ^\[(Feature|Fix|Chore|Refactor|Docs|Test|Perf|Release)\]\ .+ ]]; then
+            echo "Invalid PR title: '$PR_TITLE'"
+            echo "Expected format: [<Type>] <concise description>"
+            echo "Allowed types: Feature, Fix, Chore, Refactor, Docs, Test, Perf, Release"
+            exit 1
+          fi
+          echo "PR title valid: $PR_TITLE"
