@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "skills": {
+    "setup-rblf-skills": {
+      "source": "ricardobizerra/skills",
+      "commit": "4cce14c7a03b7718d733a21dfd9971329cd5932b",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/setup-rblf-skills/SKILL.md",
+      "computedHash": "698032d4f135e7e182277791b4a57bbcb638718398b1f3108b89f6609796d3a5"
+    }
+  }
+}

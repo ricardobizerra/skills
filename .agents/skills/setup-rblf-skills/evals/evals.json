@@ -1,0 +1,30 @@
+{
+  "skill_name": "setup-rblf-skills",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Run /setup-rblf-skills to configure this repository. It has a docker-compose.yml with api (Bun + NestJS + Prisma) and web (Next.js + Apollo GraphQL codegen) services, an origin/develop branch alongside origin/main, and an existing AGENTS.md file.",
+      "expected_output": "Explores the repo, detects Docker Compose + full-stack API/Web + Prisma + GraphQL codegen signals, and lazily loads ONLY stack-docker-fullstack.md (not the Python or Node-only adapters). Presents a 4-section configuration proposal with recommended defaults: Section A (two-branch main + develop workflow), Section B (5-stage atomic commit pipeline with Dockerized gates), Section C (Dockerized verification gates, verify-smoke.mjs probes, origin/main immutable review standards, and Protected Verification Paths), and Section D (issue tracker & domain docs). Waits for user confirmation before writing docs/agents/*.md and updating AGENTS.md.",
+      "files": [],
+      "assertions": [
+        "Selects stack-docker-fullstack.md lazily without loading unrelated stack adapters",
+        "Proposes the two-branch (main + develop) topology in docs/agents/git-workflow.md",
+        "Proposes the 5-stage Dockerized commit pipeline in docs/agents/commit-pipeline.md",
+        "Proposes docs/agents/verification.md and docs/agents/stack.md with Dockerized commands and Protected Verification Paths",
+        "Proposes updating AGENTS.md in-place with a concise ## Agent skills block without creating a duplicate CLAUDE.md"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Set up rblf skills on this FastAPI + SQLAlchemy + Alembic + Pytest repository. We only use a main branch (no develop branch), we run commands via uv on the host, and docs/agents/issue-tracker.md and docs/agents/domain.md were already created by setup-matt-pocock-skills.",
+      "expected_output": "Detects Python/FastAPI/Alembic/Pytest signals and lazily loads ONLY stack-python.md. Preserves existing docs/agents/issue-tracker.md and docs/agents/domain.md without overwriting or re-asking Section D. Proposes single-trunk (main-only) topology in docs/agents/git-workflow.md, a Python-appropriate staged commit pipeline (schema/Alembic migrations -> domain/API/tests -> generated OpenAPI/schemas -> docs) using python3/uv in docs/agents/commit-pipeline.md, and ruff/mypy/pytest verification gates in docs/agents/verification.md and docs/agents/stack.md.",
+      "files": [],
+      "assertions": [
+        "Loads stack-python.md lazily",
+        "Preserves existing docs/agents/issue-tracker.md and docs/agents/domain.md and skips Section D prompts",
+        "Configures single-trunk (main-only) promotion topology in docs/agents/git-workflow.md",
+        "Uses python3 / uv run for commands and enforces zero-flakiness pytest rules"
+      ]
+    }
+  ]
+}
