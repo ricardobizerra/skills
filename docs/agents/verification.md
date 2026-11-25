@@ -24,3 +24,9 @@ Modifications to any of the following paths require explicit human escalation an
 - `skills/engineering/code-review/`
 - `skills/engineering/testing/`
 - `skills/engineering/git-branching/`
+- `skills/engineering/pr/`
+- `skills/engineering/conventional-commits/`
+
+## Zero-Flakiness Rules
+
+- Zero skipped tests, zero test retries, zero arbitrary sleep workarounds, "Check the Check" failure verification, and a strict **3-Round Fix Cap**.
