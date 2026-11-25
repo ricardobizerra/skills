@@ -1,6 +1,6 @@
 ---
 name: software-factory
-description: Shared language and governance architecture for designing an autonomous software factory: the tasks it runs, the services it plugs into, the Verification Brakes that stop reward hacking, and Rolling Ratchet workflows. Use when designing, auditing, or discussing automated agent pipelines, CI agent runners, dependency/skill ratchets, or autonomous PR loops.
+description: "Shared language and governance architecture for designing an autonomous software factory: the tasks it runs, the services it plugs into, the Verification Brakes that stop reward hacking, and Rolling Ratchet workflows. Use when designing, auditing, or discussing automated agent pipelines, CI agent runners, dependency/skill ratchets, or autonomous PR loops."
 disable-model-invocation: true
 metadata:
   credits:
