@@ -1,0 +1,3 @@
+# Curated Maintainer Governance and Out-of-Scope Ledger
+
+`ricardobizerra/skills` is published publicly under the MIT License so developers can install and fork the skills freely, yet open community pull requests against opinionated agent playbooks create high review overhead and scope drift. Following `mattpocock/skills`, we adopted a **Curated Maintainer Model**: issues are welcome via a structured form enforcing the **Observed-Failure Bar** (`SCOPE.md`), while direct pull requests are restricted to maintainers and invited collaborators (`CONTRIBUTING.md`), backed by a persistent **Out-of-Scope Ledger** (`.out-of-scope/`) so rejected concepts are documented once rather than re-debated.

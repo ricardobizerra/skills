@@ -1,0 +1,3 @@
+# Zero-Dependency Repo Validation and Self-Hosted Dogfooding
+
+A pure Markdown skills repository risks silent drift between `skills/engineering/`, `.claude-plugin/marketplace.json`, `README.md`, and `evals/evals.json`, while adding `package.json` and `node_modules` solely for linting introduces supply-chain surface and maintenance churn. We decided to enforce repository integrity using a zero-dependency Node.js 20+ ESM validator (`scripts/validate-repo.mjs`) wired into GitHub Actions CI, and to dogfood our own `/setup-rblf-skills` and `/code-review` contracts via `AGENTS.md`, `CLAUDE.md` (`@AGENTS.md`), `docs/agents/*.md`, and root `REVIEW.md`.

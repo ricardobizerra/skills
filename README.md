@@ -105,6 +105,19 @@ flowchart TD
   - [ADR 0001: Per-Repo Setup Contract and Lazy Stack Adapters](docs/adr/0001-setup-contract-and-lazy-stack-adapters.md)
   - [ADR 0002: Immutable Verification Brakes and Protected Verification Paths](docs/adr/0002-immutable-verification-brakes-and-protected-paths.md)
   - [ADR 0003: Upstream Skill Attribution and Governance Specialization](docs/adr/0003-upstream-skill-attribution-and-specialization.md)
+  - [ADR 0004: Curated Maintainer Governance and Out-of-Scope Ledger](docs/adr/0004-curated-maintainer-governance-and-out-of-scope-ledger.md)
+  - [ADR 0005: Zero-Dependency Repo Validation and Self-Hosted Dogfooding](docs/adr/0005-zero-dependency-repo-validation-and-self-hosted-dogfooding.md)
+
+---
+
+## Governance & Contributing
+
+- [**CONTRIBUTING.md**](CONTRIBUTING.md) — **Curated Maintainer Model** (issues welcome; direct PRs restricted to maintainers/collaborators) and local validation instructions.
+- [**SCOPE.md**](SCOPE.md) & [**.out-of-scope/**](.out-of-scope/) — **Observed-Failure Bar** and standing scope rejection ledger.
+- [**REVIEW.md**](REVIEW.md) — Immutable code-review policy evaluated from `origin/main`.
+- [**CHANGELOG.md**](CHANGELOG.md) — Release history (Keep a Changelog / SemVer via `.claude-plugin/marketplace.json`).
+- [**SECURITY.md**](SECURITY.md) — Private vulnerability reporting policy.
+- [**LICENSE**](LICENSE) — MIT License.
 
 ---
 

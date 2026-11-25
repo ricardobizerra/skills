@@ -59,3 +59,17 @@ _Avoid_: infinite retry loop, auto-fix loop
 **Rolling Ratchet**:
 A scheduled or event-driven software factory task (such as dependency synchronization or tracked skill updates) that maintains a single rolling branch and pull request into the integration branch, automatically resolving deterministic artifact conflicts and escalating manual code conflicts.
 _Avoid_: auto-merge bot, background cron job
+
+### Repository Scope & Governance
+
+**Curated Maintainer Model**:
+The contribution model where the repository is open-source under MIT and welcomes issues, while direct pull requests are restricted to maintainers and invited collaborators.
+_Avoid_: closed source, open PRs
+
+**Observed-Failure Bar**:
+The two-part issue evaluation standard requiring every accepted issue to describe a concrete failure observed in a real agent session and to align with `SCOPE.md` and `.out-of-scope/`.
+_Avoid_: bug-only rule, strict triage
+
+**Out-of-Scope Ledger**:
+The `.out-of-scope/` directory of short Markdown records documenting pre-decided scope rejections and their rationale so already-settled debates are not reopened.
+_Avoid_: wontfix folder, rejected ideas

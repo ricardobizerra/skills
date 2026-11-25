@@ -1,0 +1,16 @@
+# Local agent scratch & transient work
+.scratch/
+
+# OS & editor metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs & environment
+*.log
+.env
+.env.*
+
+# Optional local Node artifacts (repo scripts are zero-dependency)
+node_modules/
